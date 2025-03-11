@@ -1,146 +1,105 @@
-# ChatGPT Integration
+# ChatGPT Structured Output Demo
 
-This project demonstrates how to integrate ChatGPT into a Java application using Spring Boot. It leverages the official OpenAI Java library to communicate with the ChatGPT API and implements a structured output approach. By using a Strategy design pattern together with Spring Boot’s class mapping features, the application easily converts raw ChatGPT responses into a well-defined data structure.
-
-## Table of Contents
-1. [Overview](#overview)  
-2. [Features](#features)  
-3. [Prerequisites](#prerequisites)  
-4. [Installation](#installation)  
-5. [Configuration](#configuration)  
-6. [Usage](#usage)  
-7. [Structured Output Implementation](#structured-output-implementation)  
-8. [Additional Resources](#additional-resources)  
-9. [Project Structure](#project-structure)  
-10. [License](#license)  
-11. [Contributing](#contributing)
-
----
-
-## Overview
-This repository showcases how to integrate ChatGPT into a Spring Boot application using the official OpenAI Java library. The project connects to the ChatGPT API, sends prompts, and receives structured responses by leveraging a Strategy design pattern. This design simplifies the transformation of raw responses into a consistent and well-organized format.
-
----
+This project demonstrates how to leverage the **Strategy Pattern** along with **Spring Boot** class mapping to easily implement structured output from ChatGPT. The approach allows you to generate and parse JSON responses from ChatGPT in a type-safe manner using custom DTOs and message strategies.
 
 ## Features
-- **OpenAI ChatGPT API Integration:** Connect to the ChatGPT API using the official [OpenAI Java library](https://github.com/openai/openai-java).  
-- **Structured Output:** Transform raw responses into a consistent data structure using a Strategy design pattern and Spring Boot’s mapping capabilities.  
-- **Flexibility:** Easily switch or update the response transformation logic without impacting the rest of the application.  
-- **Spring Boot Integration:** Benefit from Spring Boot’s robust configuration and dependency management.
 
----
+- **Structured Output via ChatGPT:**  
+  Generate responses in a predefined JSON structure by instructing ChatGPT with system messages. The response is automatically mapped to your defined DTOs (e.g., `HadithOfTheDayDTO`, `IslamicEventDetailDTO`, `QuranOfTheDayDTO`) using the strategy pattern.
 
-## Prerequisites
-- **Java 8+**
-- **Maven 3+**
-- **OpenAI API Key:** Generate your own ChatGPT API key at [https://platform.openai.com/](https://platform.openai.com/).
+- **Strategy Pattern for Flexibility:**  
+  Each ChatGPT request is encapsulated in a strategy class (e.g., `HadithOfTheDayStrategy`, `IslamicEvent`, `QuranOfTheDay`). This makes it easy to extend the system with additional structured outputs without changing the core logic.
 
----
+- **Spring Boot Integration:**  
+  The application is built with Spring Boot, making it easy to manage dependency injection, configuration, and RESTful endpoints.
 
-## Installation
-1. **Clone the repository:**
+- **Official OpenAI Java Library:**  
+  This project uses the official [OpenAI Java library](https://github.com/openai/openai-java) to communicate with the ChatGPT API.
+
+## Getting Started
+
+### Prerequisites
+
+- **Java 11 or higher**
+- **Maven or Gradle**
+- **Spring Boot 2.5+**
+
+### Setup
+
+1. **Clone the Repository:**
+
    ```bash
-   git clone https://github.com/sharifrahim/chatgpt-integration.git
+   git clone https://github.com/sharifrahim/your-repo.git
+   cd your-repo
    ```
-2. **Navigate into the project folder:**
-   ```bash
-   cd chatgpt-integration
+
+2. **Generate your own ChatGPT API Key:**
+
+   Sign up or log in to [OpenAI Platform](https://platform.openai.com/) and create your API key.
+
+3. **Configure the API Key:**
+
+   In your application's `application.properties` or `application.yml`, add the following property:
+
+   ```properties
+   openai.api.key=YOUR_OPENAI_API_KEY
    ```
-3. **Build the project:**
-   ```bash
-   mvn clean install
-   ```
-   This command downloads dependencies (including the official OpenAI Java library) and compiles the project.
 
----
+4. **Build and Run the Application:**
 
-## Configuration
-1. **Set your OpenAI API Key:**  
-   You can configure your API key using one of the following methods:
-   - **Environment Variable:**
-     ```bash
-     export OPENAI_API_KEY="your_api_key_here"
-     ```
-   - **Configuration File (e.g., `application.properties`):**
-     ```properties
-     openai.api.key=your_api_key_here
-     ```
-   - **Java System Property:**
-     ```bash
-     mvn clean install -Dopenai.api.key="your_api_key_here"
-     ```
-2. **Additional Settings:**  
-   Configure other settings such as model type (e.g., `gpt-3.5-turbo`), temperature, or maximum tokens as needed within your configuration files.
-
----
-
-## Usage
-1. **Run the Application:**  
-   For a Spring Boot application, run:
+   Using Maven:
    ```bash
    mvn spring-boot:run
    ```
-   or run the packaged JAR:
+
+   Or using Gradle:
    ```bash
-   java -jar target/chatgpt-integration-demo.jar
+   ./gradlew bootRun
    ```
-2. **Send a Request:**  
-   Use a REST client or command-line tool (like `curl`) to send prompts to the API endpoint:
-   ```bash
-   curl -X POST -H "Content-Type: application/json" \
-       -d '{"prompt": "Hello ChatGPT!"}' \
-       http://localhost:8080/api/chat
-   ```
-3. **View the Structured Response:**  
-   The application returns responses in a structured format according to your defined data model.
 
----
+## How It Works
 
-## Structured Output Implementation
-The project ensures that ChatGPT responses are returned in a structured format. By leveraging a Strategy design pattern alongside Spring Boot’s class mapping features, the application can easily convert raw responses into a consistent data structure. This approach allows for flexible and maintainable transformation logic without impacting other parts of the application.
+### ChatGPT Structured Output
 
----
+The core of this implementation is the **ChatGptServiceImpl** class. It:
+- Generates an expected JSON format using an empty instance of the response DTO.
+- Constructs the API request with a system message instructing ChatGPT to output a JSON in the specified format.
+- Calls the ChatGPT API using the official OpenAI Java client.
+- Processes and deserializes the JSON response into the respective DTO.
 
-## Additional Resources
-- **Generate Your Own API Key:**  
-  Get started by generating your ChatGPT API key at [https://platform.openai.com/](https://platform.openai.com/).
-- **Official OpenAI Java Library:**  
-  For detailed documentation on the library, visit [https://github.com/openai/openai-java](https://github.com/openai/openai-java).
+This approach allows for:
+- **Strongly Typed Responses:**  
+  By using Spring Boot’s class mapping and DTOs, responses from ChatGPT are automatically converted into Java objects.
+- **Easy Extensibility:**  
+  By leveraging the **MessageStrategy** interface, adding a new structured output is as simple as creating a new strategy implementation.
 
----
+### Example Strategy Implementations
 
-## Project Structure
-A typical project layout might look like this:
-```
-chatgpt-integration
-├── pom.xml
-├── src
-│   └── main
-│       ├── java
-│       │   └── com.example.chatgpt
-│       │       ├── Application.java
-│       │       ├── service
-│       │       │   └── ChatGPTService.java
-│       │       └── strategy
-│       │           └── [Your Strategy Classes]
-│       └── resources
-│           └── application.properties
-└── README.md
-```
+- **Hadith of the Day:**  
+  `HadithOfTheDayStrategy` generates a user message like _"Give me random islamic hadith"_ and expects a `HadithOfTheDayDTO` as the response.
 
----
+- **Islamic Event Details:**  
+  `IslamicEvent` takes an event name as input and constructs a message requesting details about the event's origin and sunnah, formatted as a paragraph with reference links. The response is mapped to an `IslamicEventDetailDTO`.
 
-## License
-This project is released under the [MIT License](LICENSE). Feel free to modify and distribute it as needed.
+- **Quran of the Day:**  
+  `QuranOfTheDay` requests a random Quran verse and maps the output to a `QuranOfTheDayDTO`.
 
----
+## Technologies Used
+
+- **Spring Boot:** For rapid application development and dependency management.
+- **Official OpenAI Java Library:** To interact with ChatGPT via the OpenAI API.  
+  [OpenAI Java Library](https://github.com/openai/openai-java)
+- **Lombok:** To reduce boilerplate code for DTOs and services.
+- **Jackson:** For JSON processing and deserialization.
 
 ## Contributing
-Contributions, issues, and feature requests are welcome. Please open an issue or submit a pull request to discuss any improvements.
+
+Contributions are welcome! Please open issues or submit pull requests for any improvements or bug fixes.
 
 ---
 
-**Enjoy integrating ChatGPT into your Java application!**  
-If you have any questions or suggestions, please open an issue or reach out.
+**Author:** [sharifrahim](https://github.com/sharifrahim)
 
----
+Generate your own ChatGPT API key at [OpenAI Platform](https://platform.openai.com/).
+
+Enjoy building structured outputs with ease!
