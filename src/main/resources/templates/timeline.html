@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Islamic Event Timeline</title>
+  <!-- Include Tailwind CSS from CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Include vis-timeline CSS -->
+  <link href="https://unpkg.com/vis-timeline@latest/styles/vis-timeline-graph2d.min.css" rel="stylesheet" type="text/css">
+  <!-- Include vis-timeline JS -->
+  <script src="https://unpkg.com/vis-timeline@latest/standalone/umd/vis-timeline-graph2d.min.js"></script>
+  <style>
+    /* Custom styles for enhanced visuals */
+    #timelineHeading {
+      background: linear-gradient(90deg, #a8e6cf, #dcedc1);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease-in-out;
+    }
+    #timelineHeading:hover {
+      transform: scale(1.05);
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem;
+    }
+    .section-title {
+      background: linear-gradient(90deg, #f6d365, #fda085);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <!-- Header / Hero Section with Pastel Green Gradient -->
+  <header class="bg-gradient-to-r from-green-300 to-green-500 text-gray-100 py-12 shadow-lg">
+    <div class="container mx-auto px-4 text-center">
+      <h1 class="text-5xl font-extrabold">Islamic Event Timeline</h1>
+      <p class="mt-4 text-xl">Discover the significance and Sunnah of important Islamic events</p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 py-10 space-y-10">
+    <!-- Current Islamic Date Card -->
+	<section>
+	  <div class="card">
+	    <h2 class="text-3xl font-bold text-green-700">Today's Islamic Date</h2>
+	    <p class="mt-2 text-green-600">
+	      Islamic Date: <span class="font-semibold" th:text=${islamicDate}></span> <br/>
+	      Gregorian Date: <span class="font-semibold" th:text=${gregorianDate}></span>
+	    </p>
+	  </div>
+	</section>
+
+
+    <!-- Timeline Section -->
+    <section>
+      <div class="card">
+        <!-- Timeline header will be updated dynamically to display countdown -->
+        <h2 id="timelineHeading" class="text-3xl font-semibold text-center text-green-800 mb-4">
+          Timeline
+        </h2>
+        <!-- Timeline container with custom border and height -->
+        <div id="visualization" class="border-2 border-green-200 rounded" style="height: 250px;"></div>
+      </div>
+    </section>
+
+    <!-- Detailed Event Section -->
+    <section>
+      <div class="card">
+        <h3 class="text-3xl font-bold mb-4 section-title">
+          Event Details &amp; Sunnah
+        </h3>
+        <div id="detailContent" class="text-gray-700">
+          Click on an event on the timeline to view its origin story and the recommended Sunnah with references.
+        </div>
+      </div>
+    </section>
+
+    <!-- Hadith of the Day Section -->
+	<section>
+	  <div class="card">
+	    <h3 class="text-3xl font-bold mb-4 section-title">
+	      Hadith of the Day
+	    </h3>
+	    <p class="mt-2 text-gray-700">
+	      <strong>Hadith:</strong> <span th:text="${hadith.content}"></span><br/>
+	      <strong>Status:</strong> <span th:text="${hadith.status}"></span><br/>
+		  <strong>Reference:</strong> <span th:text="${hadith.reference}"></span><br/>
+	    </p>
+	  </div>
+	</section>
+
+    <!-- Ayat al Quran of the Day Section -->
+	<section>
+	  <div class="card">
+	    <h3 class="text-3xl font-bold mb-4 section-title">
+	      Ayat al Quran of the Day
+	    </h3>
+	    <p class="mt-2 text-gray-700">
+	      <strong>Translation:</strong> <span th:text="${quran.quranTranslation}"></span><br/>
+	      <strong>Surah:</strong> <span th:text="${quran.surah}"></span><br/>
+	      <strong>Ayat:</strong> <span th:text="${quran.ayat}"></span>
+	    </p>
+	  </div>
+	</section>
+  </main>
+
+  <script type="text/javascript">
+    // Get the current date (in your real app, you might fetch the server date or user's selected date)
+    const currentDate = new Date();
+
+    // Fetch timeline events from the API endpoint
+    fetch('/api/timeline')
+      .then(response => response.json())
+      .then(data => {
+        // Create the timeline items for display
+        var items = new vis.DataSet(data.map(function(item) {
+		  const formattedDate = new Date(item.eventDate).toLocaleDateString();
+          return {
+				id: item.id,
+				content: item.eventName,
+				start: item.eventDate,
+				eventName: item.eventName, // <-- Add the eventName property here
+			};
+		}));
+
+        // Timeline options
+        var options = {
+          width: '100%',
+          height: '250px',
+          editable: false,
+          selectable: true,
+          timeAxis: { scale: 'month', step: 1 },
+          format: {
+            minorLabels: { hour: '' },
+            majorLabels: { day: 'MMM D' }
+          }
+        };
+
+        // Create the timeline
+        var container = document.getElementById('visualization');
+        var timeline = new vis.Timeline(container, items, options);
+
+        // --- Find the nearest future event ---
+        const futureEvents = data.filter(item => {
+          const eventDate = new Date(item.eventDate);
+          return eventDate >= currentDate;
+        });
+
+        if (futureEvents.length > 0) {
+          // Determine the nearest future event
+          let nearestEvent = futureEvents.reduce((prev, curr) => {
+            return (new Date(curr.eventDate) - currentDate) < (new Date(prev.eventDate) - currentDate)
+              ? curr
+              : prev;
+          });
+
+          // Calculate the number of days until the event
+          const daysToEvent = Math.ceil(
+            (new Date(nearestEvent.eventDate) - currentDate) / (1000 * 60 * 60 * 24)
+          );
+
+          // Update the timeline header to display the countdown
+          document.getElementById('timelineHeading').textContent =
+            `${daysToEvent} Days to ${nearestEvent.eventName}`;
+        } else {
+          // If there are no upcoming events, display a default message
+          document.getElementById('timelineHeading').textContent = 'No Upcoming Events';
+        }
+
+        // --- Handle event click for detailed info ---
+        timeline.on('select', function(properties) {
+          if (properties.items.length > 0) {
+            var selectedId = properties.items[0];
+            // Get the event details from the DataSet (to retrieve the event name)
+            var selectedItem = items.get(selectedId);
+            var eventName = selectedItem.eventName;
+            // Fetch detail data for the selected event with the eventName as query parameter
+            fetch('/api/timeline/' + selectedId + '?eventName=' + encodeURIComponent(eventName))
+              .then(response => response.json())
+              .then(detailData => {
+                // Build structured HTML for the event details
+                var detailHTML = `
+                  <div class="mb-6">
+                    <h4 class="bg-blue-100 p-3 rounded text-xl font-semibold text-blue-800">Origin of the Story/Event</h4>
+                    <p class="mt-2">
+                      ${detailData.origin}
+                      <a href="${detailData.originRef}" target="_blank" class="text-blue-500 underline">[Reference]</a>
+                    </p>
+                  </div>
+                  <div>
+                    <h4 class="bg-blue-100 p-3 rounded text-xl font-semibold text-blue-800">Sunnah to Do on This Day</h4>
+                    <p class="mt-2">
+                      ${detailData.sunnah}
+                      <a href="${detailData.sunnahRef}" target="_blank" class="text-blue-500 underline">[Reference]</a>
+                    </p>
+                  </div>
+                `;
+                document.getElementById('detailContent').innerHTML = detailHTML;
+              })
+              .catch(error => console.error('Error fetching detail:', error));
+          }
+        });
+      })
+      .catch(error => console.error('Error fetching timeline items:', error));
+  </script>
+</body>
+</html>
