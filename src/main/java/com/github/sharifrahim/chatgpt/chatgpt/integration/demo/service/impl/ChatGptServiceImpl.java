@@ -62,9 +62,9 @@ public class ChatGptServiceImpl implements ChatGptService {
         ChatCompletionCreateParams params = ChatCompletionCreateParams.builder()
             .addUserMessage(userMessage)
             .addSystemMessage("Response in this json format : " + exampleJsonFormat + ". Only output JSON.")
-            .model(ChatModel.GPT_4O_2024_11_20)
+            .model(ChatModel.GPT_3_5_TURBO)
             .build();
-        log.info("ChatCompletionCreateParams built with model: {}", ChatModel.GPT_4O_2024_11_20);
+        log.info("ChatCompletionCreateParams built with model: {}", ChatModel.GPT_3_5_TURBO);
 
         // Send the request using the OpenAI client and receive the chat completion.
         ChatCompletion chatCompletion = openAiClient.chat().completions().create(params);
