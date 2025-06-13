@@ -1,4 +1,4 @@
-package com.github.sharifrahim.chatgpt.chatgpt.integration.demo;
+package com.github.sharifrahim.chatgptintegration.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

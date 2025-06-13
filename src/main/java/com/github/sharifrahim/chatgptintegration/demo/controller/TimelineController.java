@@ -1,4 +1,4 @@
-package com.github.sharifrahim.chatgpt.chatgpt.integration.demo.controller;
+package com.github.sharifrahim.chatgptintegration.demo.controller;
 
 import java.time.LocalDate;
 import java.time.chrono.HijrahDate;
@@ -8,11 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.github.sharifrahim.chatgpt.chatgpt.integration.demo.dto.HadithOfTheDayDTO;
-import com.github.sharifrahim.chatgpt.chatgpt.integration.demo.dto.QuranOfTheDayDTO;
-import com.github.sharifrahim.chatgpt.chatgpt.integration.demo.service.ChatGptService;
-import com.github.sharifrahim.chatgpt.chatgpt.integration.demo.strategy.impl.HadithOfTheDayStrategy;
-import com.github.sharifrahim.chatgpt.chatgpt.integration.demo.strategy.impl.QuranOfTheDay;
+import com.github.sharifrahim.chatgptintegration.demo.dto.HadithOfTheDayDTO;
+import com.github.sharifrahim.chatgptintegration.demo.dto.QuranOfTheDayDTO;
+import com.github.sharifrahim.chatgptintegration.demo.service.ChatGptService;
+import com.github.sharifrahim.chatgptintegration.demo.strategy.impl.HadithOfTheDayStrategy;
+import com.github.sharifrahim.chatgptintegration.demo.strategy.impl.QuranOfTheDay;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

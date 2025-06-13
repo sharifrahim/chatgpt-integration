@@ -1,4 +1,4 @@
-package com.github.sharifrahim.chatgpt.chatgpt.integration.demo.strategy;
+package com.github.sharifrahim.chatgptintegration.demo.strategy;
 
 /**
  * Strategy interface for defining message behavior for ChatGPT interactions.

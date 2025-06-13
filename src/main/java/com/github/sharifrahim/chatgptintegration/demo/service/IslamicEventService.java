@@ -1,4 +1,4 @@
-package com.github.sharifrahim.chatgpt.chatgpt.integration.demo.service;
+package com.github.sharifrahim.chatgptintegration.demo.service;
 
 import java.time.LocalDate;
 import java.time.chrono.HijrahDate;
@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.github.sharifrahim.chatgpt.chatgpt.integration.demo.dto.TimelineItemDTO;
+import com.github.sharifrahim.chatgptintegration.demo.dto.TimelineItemDTO;
 
 import lombok.extern.slf4j.Slf4j;
 

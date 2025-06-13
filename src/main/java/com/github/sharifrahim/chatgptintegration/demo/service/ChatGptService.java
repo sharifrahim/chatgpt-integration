@@ -1,4 +1,4 @@
-package com.github.sharifrahim.chatgpt.chatgpt.integration.demo.service;
+package com.github.sharifrahim.chatgptintegration.demo.service;
 
 /**
  * Service interface for interacting with ChatGPT.
