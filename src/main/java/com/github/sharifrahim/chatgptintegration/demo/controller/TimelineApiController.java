@@ -1,4 +1,4 @@
-package com.github.sharifrahim.chatgpt.chatgpt.integration.demo.controller;
+package com.github.sharifrahim.chatgptintegration.demo.controller;
 
 import java.util.List;
 
@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.sharifrahim.chatgpt.chatgpt.integration.demo.dto.IslamicEventDetailDTO;
-import com.github.sharifrahim.chatgpt.chatgpt.integration.demo.dto.TimelineDetailDTO;
-import com.github.sharifrahim.chatgpt.chatgpt.integration.demo.dto.TimelineItemDTO;
-import com.github.sharifrahim.chatgpt.chatgpt.integration.demo.service.ChatGptService;
-import com.github.sharifrahim.chatgpt.chatgpt.integration.demo.service.IslamicEventService;
-import com.github.sharifrahim.chatgpt.chatgpt.integration.demo.strategy.impl.IslamicEvent;
+import com.github.sharifrahim.chatgptintegration.demo.dto.IslamicEventDetailDTO;
+import com.github.sharifrahim.chatgptintegration.demo.dto.TimelineDetailDTO;
+import com.github.sharifrahim.chatgptintegration.demo.dto.TimelineItemDTO;
+import com.github.sharifrahim.chatgptintegration.demo.service.ChatGptService;
+import com.github.sharifrahim.chatgptintegration.demo.service.IslamicEventService;
+import com.github.sharifrahim.chatgptintegration.demo.strategy.impl.IslamicEvent;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

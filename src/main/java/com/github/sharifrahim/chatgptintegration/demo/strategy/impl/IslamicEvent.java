@@ -1,7 +1,7 @@
-package com.github.sharifrahim.chatgpt.chatgpt.integration.demo.strategy.impl;
+package com.github.sharifrahim.chatgptintegration.demo.strategy.impl;
 
-import com.github.sharifrahim.chatgpt.chatgpt.integration.demo.dto.IslamicEventDetailDTO;
-import com.github.sharifrahim.chatgpt.chatgpt.integration.demo.strategy.MessageStrategy;
+import com.github.sharifrahim.chatgptintegration.demo.dto.IslamicEventDetailDTO;
+import com.github.sharifrahim.chatgptintegration.demo.strategy.MessageStrategy;
 
 import lombok.Setter;
 

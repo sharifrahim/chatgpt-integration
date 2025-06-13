@@ -1,9 +1,9 @@
-package com.github.sharifrahim.chatgpt.chatgpt.integration.demo.service.impl;
+package com.github.sharifrahim.chatgptintegration.demo.service.impl;
 
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.sharifrahim.chatgpt.chatgpt.integration.demo.service.ChatGptService;
+import com.github.sharifrahim.chatgptintegration.demo.service.ChatGptService;
 import com.openai.client.OpenAIClient;
 import com.openai.models.ChatCompletion;
 import com.openai.models.ChatCompletionCreateParams;

@@ -1,4 +1,4 @@
-package com.github.sharifrahim.chatgpt.chatgpt.integration.demo.dto;
+package com.github.sharifrahim.chatgptintegration.demo.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
