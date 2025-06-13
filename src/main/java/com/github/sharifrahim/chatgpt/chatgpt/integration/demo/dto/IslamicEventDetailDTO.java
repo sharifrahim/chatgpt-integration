@@ -41,5 +41,5 @@ public class IslamicEventDetailDTO {
     /**
      * The reference link providing additional details about the sunnah.
      */
-    private String sunnahRefLInk;
+    private String sunnahRefLink;
 }

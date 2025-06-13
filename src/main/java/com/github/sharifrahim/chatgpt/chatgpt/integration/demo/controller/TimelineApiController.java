@@ -94,7 +94,7 @@ public class TimelineApiController {
                 eventDetail.getOrigin(),
                 eventDetail.getOriginRefLink(),
                 eventDetail.getSunnah(),
-                eventDetail.getSunnahRefLInk()
+                eventDetail.getSunnahRefLink()
         );
         
         // Log completion of the detailed event information retrieval
